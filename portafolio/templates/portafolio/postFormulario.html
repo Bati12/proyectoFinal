@@ -1,0 +1,35 @@
+{% extends "portafolio/post.html" %}
+		{% load static %}
+{% block contenidoQueCambia %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0 ">
+                <li class="nav-item "><a class="nav-link" href="{%url 'Publi' %}">volver</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<section class="page-section" id="services">
+    <div class="container">
+        <div class="text-center">
+            <h2 class="section-heading text-uppercase">FOrmulario para publicar su Post</h2>
+        </div>
+        <div class="container mt-5">
+            <form action="" method="POST">
+                {% csrf_token %}
+                <div class="mb-3">          
+                    <label class="form-label" for="id_titulo">Titulo:</label>
+                    <input type="text" class="form-control" name="titulo" maxlength="150" required="" id="id_titulo">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="id_descripcion">Descripcion:</label>
+                    <textarea class="form-control" name="descripcion" cols="40" rows="2" placeholder="Que desea publicar..." maxlength="100000" required="" id="id_descripcion" style="height: 103px;"></textarea>
+                </div>
+                <button class="btn btn-primary" type="submit">Publicar</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

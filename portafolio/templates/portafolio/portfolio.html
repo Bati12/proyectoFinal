@@ -1,0 +1,204 @@
+{% extends "portafolio/padre.html" %}
+		{% load static %}
+{% block contenidoQueCambia %}
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-dark" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand" href="#page-top">AE/</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                Menu
+                <i class="fas fa-bars ms-1"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0 ">
+                    <li class="nav-item "><a class="nav-link" href="{%url 'Publi' %}">Post</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#services">Skills</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#portfolio">Portafolio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#about">Sobre mi</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contacto">Contacto</a></li>
+                    {% if not request.user.is_authenticated %}
+                    <li class="nav-item"><a class="nav-link" href="{%url 'Login' %}"><i class="fa-solid fa-user "></i></a></li>
+                    {%endif%}               
+                    {% if request.user.is_authenticated %}
+                    <li class="nav-item"><a class="nav-link" href="{%url 'Perfil' user.username %}">{{user.username}}</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{%url 'Logout' %}"><i class="fa-solid fa-arrow-right-from-bracket"></i></a></li>
+                    {%endif%}
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- Masthead-->
+    <header class="masthead">
+        <div class="container">
+            <div class="fs-1 text">Alexis Escobar</div>
+            <div class="fs-3 text">Python Developer &amp; Web Developer</div>
+            <div class="p-4">
+                <a class="btn btn-primary btn-xl text-uppercase" href="#about">Mas Info</a>
+            </div>
+        </div>
+    </header>
+    {% if request.user.is_authenticated %}
+    <!-- Services-->    
+    <section class="page-section" id="services">
+        <div class="container">
+            <div class="text-center">
+                <h2 class="section-heading text-uppercase">Skills</h2>
+            </div>
+            <div class="row text-center">
+                <div class="col-md-4">
+                    <span class="fa-stack fa-4x">
+                        <img src="https://img.icons8.com/color/48/000000/html-5--v1.png" alt="HTML5">            
+                        <h4 class="my-3">HTML5</h4>
+                    </span> 
+                </div>
+                <div class="col-md-4">
+                    <span class="fa-stack fa-4x">
+                        <img src="https://img.icons8.com/color/48/000000/css3.png" alt="HTML5">            
+                        <h4 class="my-3">CSS3</h4>
+                    </span> 
+                </div>
+                <div class="col-md-4">
+                    <span class="fa-stack fa-4x">
+                        <img src="https://img.icons8.com/color/48/000000/bootstrap.png" alt="HTML5">            
+                        <h4 class="my-3">BOOTSTRAP</h4>
+                    </span> 
+                </div>
+                <div class="col-md-4">
+                    <span class="fa-stack fa-4x">
+                        <img src="https://img.icons8.com/color/48/000000/python--v1.png" alt="HTML5">            
+                        <h4 class="my-3">PYTHON</h4>
+                    </span> 
+                </div>
+                <div class="col-md-4">
+                    <span class="fa-stack fa-4x">
+                        <img src="https://img.icons8.com/color/48/000000/django.png" alt="HTML5">            
+                        <h4 class="my-3">DJANGO</h4>
+                    </span> 
+                </div>
+                <div class="col-md-4">
+                    <span class="fa-stack fa-4x">
+                        <img src="https://img.icons8.com/color/48/000000/git.png" alt="HTML5">            
+                        <h4 class="my-3">GIT</h4>
+                    </span> 
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Portfolio-->
+    <section class="content-section" id="portfolio">
+        <div class="container px-4 px-lg-5">
+            <div class="text-center">
+                <h2 class="section-heading text-uppercase">Portafolio</h2>
+                <br>
+                <br>
+            </div>
+            <div class="row gx-0">
+                {% for proyecto in proyectos %}
+                <div class="col-lg-6 p-2">
+                    <div class="caption-content text-center">
+                        <div class="h1 text-warning">{{proyecto.titulo}}</div>
+                        <p class="mb-1">{{proyecto.descripcion}}</p>
+                    </div>
+                    
+                    <div class="portfolio-item">                            
+                        <a class="portfolio-link"  href="{{proyecto.urlGit}}" target="_blank">
+                            <div class="portfolio-hover">
+                                <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                            </div>
+                            <img class="img-fluid" src="{{proyecto.imagen.url}}" alt="{{proyecto.titulo}}"/>
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    <!-- About-->
+    <section id="about" class="about">
+        <div class="container" data-aos="fade-up">
+            <div class="section-title text-center">
+                <h2 class="section-heading text-uppercase">Sobre mi</h2>
+                <br>
+                <br>
+            </div>
+            <div class="row">
+                <div class="col-lg-4">
+                    <img src="{%static '/port/img/foto5.jpg'%}" class="img-fluid" alt="">
+                </div>
+                <div class="col-lg-8 pt-4 pt-lg-0 content">
+                    <h3>Python Developer &amp; Web Developer.</h3>
+                    <p class="fst-italic">Soy Alexis Escobar tengo 22 años, realice como proyecto final para el curso de python de Coderhouse un portafolio, en este portafolio se pueden ver mis skills, los proyectos que fui realizando, un sobre mi donde tambien van a poder ver mi cv y las formas que tiene de contactarse conmigo. Ademas agrege un apartado de posts donde los usuarios que se registren ademas de ver mi portafolio van a poder ingresar al post y publicar lo que le guste, ademas tambien cuenta con inicio de secion, registro, edicion de perfil y cerrar cesion, tiene un buscador para buscar un post que le interese ademas los usuario van a poder editar y eliminar su post de dos formas, la primera ingresando en su perfil o ingresando al post que publicaron  
+                    </p>
+                    <div class="row">
+                </div>
+                <p>
+                    Lenguajes:
+                </p>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <ul>
+                            <li><i class="bi bi-chevron-right"></i> <span>Español</span></li>
+                            <li><i class="bi bi-chevron-right"></i> <span>Ingles Basico</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <a class="btn btn-primary btn-xl text-uppercase" href="https://drive.google.com/file/d/1tPuhpbvV-2uZUqk1kD3JxivQPkNayoHf/view?usp=sharing" target="_blank"><i class="fas fa-download"></i> Descargar CV</a>
+            </div>
+        </div>
+    </section>
+    <!-- Contact-->
+    <section class="page-section" id="contacto">
+        <div class="container">
+            <div class="text-center">
+                <h2 class="section-heading text-uppercase">Contacto</h2>
+                <br>
+                <br>
+            </div>
+            <div class="container" data-aos="fade-up">
+                <div class="row">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <ul>
+                                <li><a class="btn btn-dark btn-social mx-2" href="https://www.instagram.com/alexescobar67/" aria-label="Instagram" target="_blank"><i class="fab fa-instagram"></i></a>Alexescobar67</li>
+                            </ul>
+                        </div>
+                        <div class="col-lg-6">
+                            <ul>
+                                <li><a class="btn btn-dark btn-social mx-2" href="https://github.com/Bati12" aria-label="Github" target="_blank"><i class="fab fa-github"></i></a>Bati12</li>                                
+                            </ul>
+                        </div>
+                        <div class="col-lg-6">
+                            <ul>
+                                <li><a class="btn btn-dark btn-social mx-2" href="https://api.whatsapp.com/send?phone=543516131402" aria-label="Whatsapp" target="_blank"><i class="fab fa-whatsapp"></i></a>3516131402</li>                          
+                            </ul>
+                        </div>
+                        <div class="col-lg-6">
+                            <ul>
+                                <li><a class="btn btn-dark btn-social mx-2" href="https://www.linkedin.com/in/alexis-escobar-95b491184/" aria-label="LinkedIn" target="_blank"><i class="fab fa-linkedin-in"></i></a>Alexis Escobar</li>
+                            </ul>
+                        </div>
+                        <div class="col-lg-6">
+                            <ul>
+                                <li><a class="portfolio-link btn btn-dark btn-social mx-2" href="{%url 'Email' %}" aria-label="Gmail"><i class="fa fa-envelope"></i></a>alexisescobardev@gmail.com</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    {%endif%}
+    {% if not request.user.is_authenticated %}
+    <section class="content-section">
+        <div class="container px-4 px-lg-5">
+            <div class="text-center">
+                <h2 class="section-heading text-uppercase">Necesitas Iniciar secion o crearte un usuario</h2>
+
+            </div>
+        </div>
+    </section>
+    {%endif%}
+    <footer class="py-5 bg-dark">
+        <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Alexis Escobar</p></div>
+    </footer>
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends "portafolio/padre.html" %}
+		{% load static %}
+{% block contenidoQueCambia %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand" href="{%url 'Inicio' %}">AE/</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
+                <li class="nav-item"><a class="nav-link" href="{%url 'Publi' %}" >Volver</a></li>
+                {% if not request.user.is_authenticated %}
+                <li class="nav-item"><a class="nav-link" href="{%url 'Login' %}"><i class="fa-solid fa-user "></i></a></li>
+                {%endif%}
+                {% if request.user.is_authenticated %}
+                <li class="nav-item"><a class="nav-link" href="{%url 'Perfil' user.username %}">{{user.username}}</a></li>
+                {%endif%}
+                <li class="nav-item"><a class="nav-link" href="{%url 'Logout' %}"><i class="fa-solid fa-arrow-right-from-bracket"></i></a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<header class="py-5 bg-light border-bottom mb-4">
+    <div class="container">
+        <div class="text-center my-5">
+            <h1 class="fw-bolder">Estos son los resultados</h1>
+        </div>
+    </div>
+</header>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-7">
+            {% if posts %}
+                {% for post in posts %}
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h2 class="card-title h4">{{post.titulo}}</h2>
+                        <p class="card-text">{{post.descripcion|striptags|truncatechars:100}}</p>
+                        <time class="small text-muted">{{post.fecha}}</time>
+                        <a class="btn btn-primary" href="{% url 'postDetail' post.id%}">Read more →</a>
+                    </div>
+                </div>
+                {%endfor%}
+            {%else%}
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h2 class="card-title h4">No se encontraron resultados</h2>                    
+                </div>
+            </div>
+            {%endif%}
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

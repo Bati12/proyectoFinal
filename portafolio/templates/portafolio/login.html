@@ -1,0 +1,60 @@
+{% extends "portafolio/padre.html" %}
+		{% load static %}
+{% block contenidoQueCambia %}
+
+<link href="{%static '/port/css/style1.css' %}" rel="stylesheet" />
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="mainNav">
+    <div class="container">
+        <a class="nav-link" href="{%url 'Inicio' %}">Volver</a>
+    </div>
+</nav>
+{% if user.is_authenticated %}
+<section class="page-section">
+    <div class="container">
+        <div class="text-center">
+            <h1 class="section-heading text-uppercase">{{mensaje}}</h1> 
+        </div>
+    </div>
+</section>
+{%endif%}
+{% if not user.is_authenticated %}
+    <div class="wrapper">
+        <div class="logo">
+            <img src="{%static 'port/img/icono.jpg'%}" alt="">
+        </div>
+        <div class="text-center mt-4 name">
+            Iniciar sesion
+        </div>
+        {% if form.errors %}
+        <div class="text-center mt-4 name">
+            <p>Ingresaste mal los datos, intenta de nuevo</p>
+        </div>
+        <button class="btn mt-3"><a class="text-light" href="{%url 'Login' %}">Reintentar</a></button>
+        {%else%}
+        <form class="p-3 mt-3" method="POST">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label class="form-label" for="id_username">Username:</label>
+                <input class="form-control" type="text" name="username" autofocus="" autocapitalize="none" autocomplete="username" maxlength="150" required="" id="id_username">
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="id_password">Password:</label>
+                <input class="form-control" type="password" name="password" autocomplete="current-password" required="" id="id_password">
+            </div>
+            <button type="submit" class="btn mt-3">Iniciar sesion</button>
+            <br>
+        </form>
+        <div class="text-center fs-6">
+            <a href="{%url 'Register' %}">Crear cuenta</a>
+        </div>
+        {%endif%}
+        {% for mensage in messages%}
+        <div class="text-center mt-4 name">
+            {{mensage}}
+        </div>
+        {%endfor%}
+    </div>
+
+{%endif%}
+{%endblock%}

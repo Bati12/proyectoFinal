@@ -1,0 +1,46 @@
+{% extends "portafolio/padre.html" %}
+		{% load static %}
+{% block contenidoQueCambia %}
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-dark" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand" href="{%url 'Inicio' %}">Volver</a>
+        </div>
+    </nav>
+    <section class="page-section" id="contact">
+        <div class="container">
+            <div class="text-center">
+                <h2 class="section-heading text-uppercase">Gmail</h2>
+            </div>
+            <div class="container">
+                <form id="contactForm" action="" method="POST">
+                    <div class="row align-items-stretch mb-5">
+                        <div class="col-md-6">
+                            {% csrf_token %}
+                            <div class="tag text-light">Nombre Completo</div>
+                            <div class="form-group">
+                                <input class="form-control" type="text" name="full-name" placeholder="Ingrese su nombre y apellido">
+                            </div>
+                            <div class="tag text-light">Correo</div>
+                            <div class="form-group">
+                                <input class="form-control" type="text" name="email" placeholder="Ingrese su correo electronico">
+                            </div>
+                            <div class="tag text-light">Asunto</div>
+                            <div class="form-group">
+                                <input class="form-control" type="text" name="subject"placeholder="Ingrese un asunto">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group form-group-textarea mb-md-0">
+                                <div class="tag">Mensaje</div>
+                                <textarea class="form-control" name="message" cols="30" rows="10" placeholder="Ingrese el mensaje"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <input type="submit" class="btn btn-primary btn-xl text-uppercase" value="Enviar">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+{% endblock %}

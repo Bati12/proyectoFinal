@@ -1,0 +1,87 @@
+{% extends "portafolio/padre.html" %}
+		{% load static %}
+{% block contenidoQueCambia %}
+    <!-- Responsive navbar-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand" href="{%url 'Inicio' %}">AE/</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
+                    <li class="nav-item"><a class="nav-link" href="{%url 'Inicio' %}">VOLVER</a></li>
+                    {% if not request.user.is_authenticated %}
+                    <li class="nav-item"><a class="nav-link" href="{%url 'Login' %}"><i class="fa-solid fa-user "></i></a></li>
+                    {%endif%}
+                    {% if request.user.is_authenticated %}
+                    <li class="nav-item"><a class="nav-link" href="{%url 'Perfil' user.username%}">{{user.username}}</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{%url 'Logout' %}"><i class="fa-solid fa-arrow-right-from-bracket"></i></a></li>
+                    {%endif%}
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    {% if request.user.is_authenticated %}
+    <!-- Page header with logo and tagline-->
+    <header class="py-5 bg-light border-bottom mb-4">
+        <div class="container">
+            <div class="text-center my-5">
+                <h1 class="fw-bolder">Bienvenido a mi Post</h1>
+            </div>
+        </div>
+    </header>
+    <!-- Page content-->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-7">
+                {% for post in posts %}
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h2 class="card-title h4">{{post.titulo}}</h2>
+                        <p class="card-text">{{post.descripcion|striptags|truncatechars:100}}</p>
+                        <time class="small text-muted">{{post.fecha}}</time>
+                        <a class="btn btn-primary" href="{% url 'postDetail' post.id%}">Mas info→</a>
+                    </div>
+                </div>
+                {%endfor%}
+            </div>            
+            <div class="col-lg-5">
+                <!-- Search widget-->
+                <div class="mb-4">
+                    <div class="col-lg-4">
+                        <a class="btn btn-primary" href="{% url 'Posteo'%}"><i class="fa-solid fa-plus"></i>Publicar</a>
+                    </div>
+                </div>
+                <div class="card mb-4">
+                    <div class="card-header">Buscar</div>
+                    <div class="card-body">
+                        <div class="input-group">
+                            <form class="row g-3" action="{% url 'Buscar' %}" method="GET">
+                                <div class="col-auto">
+                                    <input type="text" name="buscar" class="form-control">
+                                </div>
+                                <div class="col-auto">
+                                    <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {%endif%}
+    {% if not request.user.is_authenticated %}
+    <section class="content-section">
+        <div class="container px-4 px-lg-5">
+            <div class="text-center">
+                <h2 class="section-heading text-uppercase">Necesitas Iniciar secion o crearte un usuario</h2>
+
+            </div>
+        </div>
+    </section>
+    {%endif%}
+    <footer class="py-5 bg-dark">
+        <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Alexis Escobar</p></div>
+    </footer>
+{% endblock %}

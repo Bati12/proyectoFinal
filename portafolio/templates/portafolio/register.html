@@ -1,0 +1,61 @@
+{% extends "portafolio/padre.html" %}
+		{% load static %}
+{% block contenidoQueCambia %}
+
+<link href="{%static '/port/css/style1.css' %}" rel="stylesheet" />
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="mainNav">
+        <div class="container">
+            <a class="nav-link" href="{%url 'Login' %}">Volver</a>
+        </div>
+    </nav>
+    <div class="wrapper">
+        <div class="logo">
+            <img src="{%static 'port/img/icono.jpg'%}" alt="">
+        </div>
+
+        {% if form.errors %}
+        <div class="text-center mt-4 name">
+            <p>Ingresaste mal los datos para crear tu usuario</p>
+        </div>
+        <button class="btn mt-3"><a class="text-light" href="{%url 'Register' %}">Reintentar</a></button>
+        {%else%}
+            <div class="text-center mt-4 name">
+                Crear cuenta
+            </div>
+            <form class="p-3 mt-3" method="POST">
+                {% csrf_token %}
+                <div class="form-field d-flex align-items-center">
+                    <span class="fas fa-user">{{form.username.id_for_label}}</span>
+                    <input type="text" class="form-control" name="{{form.username.html_name}}" placeholder="Usuario">
+                    <small class="form-text text-muted">{{form.username.help_text}}</small>
+                </div>
+                <div class="form-field d-flex align-items-center">
+                    <span class="fas fa-envelope">{{form.email.id_for_label}}</span>
+                    <input type="text" class="form-control" name="{{form.email.html_name}}" placeholder="Example@gmail.com">
+                    <small class="form-text text-muted">{{form.email.help_text}}</small>
+                </div>
+                <div class="form-field d-flex align-items-center">
+                    <span class="fas fa-key">{{form.password1.id_for_label}}</span>
+                    <input type="password" class="form-control" name="{{form.password1.html_name}}" placeholder="Contraseña">
+                    <small class="form-text text-muted">
+                        {{form.password1.help_text}}
+                    </small>
+                </div>
+                <div class="form-field d-flex align-items-center">
+                    <span class="fas fa-key">{{form.username.id_for_label}}</span>
+                    <input type="password" class="form-control" name="{{form.password2.html_name}}" placeholder="Repetir contraseña">
+                    <small class="form-text text-muted">{{form.password2.help_text}}</small>
+                </div>
+                <button type="submit" class="btn mt-3">Registrate</button>
+            </form>
+        {% endif %}
+        
+        {% if user.is_authenticated %}
+            <div class="text-center mt-4 name">
+                <p>{{mensaje}}</p>
+                <p>Presiona el boton para iniciar sesion</p>
+            </div>
+            <button class="btn mt-3"><a class="text-light" href="{%url 'Login' %}">Iniciar sesion</a></button>
+        {%endif%}
+    </div>
+{% endblock %}
